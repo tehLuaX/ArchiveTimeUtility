@@ -22,6 +22,7 @@
 	SOFTWARE.
 */
 using System;
+using System.IO;
 
 namespace ArchiveTimeUtility
 {
@@ -31,6 +32,7 @@ namespace ArchiveTimeUtility
 		private static readonly string[] VALID_PARAMS = { "-d", "--dir" };
 		static void Main(string[] args)
 		{
+			ShowLicense();
 			// Syntax: atu [store|restore] <--dir directory> [atfPath]
 			string rootDir = null,
 				currentJob = null,
@@ -129,6 +131,21 @@ namespace ArchiveTimeUtility
 				Console.WriteLine("Firing up job \"store\"");
 				new Jobs.Store(rootDir);
 			}
+		}
+		private static void ShowLicense()
+		{
+			try
+			{
+				string[] licenseLines = File.ReadAllLines("./LICENSE.txt");
+
+				foreach (string line in licenseLines)
+				{
+					Console.WriteLine(line);
+				}
+			} catch (IOException)
+			{}
+			Console.WriteLine("This program is licensed under the MIT license. Press any key to accept the license.");
+			Console.ReadKey();
 		}
 	}
 }
