@@ -112,7 +112,7 @@ namespace ArchiveTimeUtility
 			}
 			Console.WriteLine($"Detected requested job: {currentJob}");
 			Console.WriteLine($"Detected requested root directory: {rootDir}");
-			if (currentJob.Equals("store"))
+			if (currentJob.Equals("restore"))
 			{
 				Console.WriteLine("Firing up job \"restore\"");
 				new Jobs.Restore(rootDir);

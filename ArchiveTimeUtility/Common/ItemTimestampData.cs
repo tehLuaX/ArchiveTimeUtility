@@ -22,13 +22,19 @@
 	SOFTWARE.
 */
 using System;
-namespace ArchiveTimeUtility.Jobs
+
+namespace ArchiveTimeUtility.Common
 {
-    class Restore
+    class ItemTimestampData
     {
-        public Restore(string rootDir)
+        public DateTime CreationTime { get; private set; }
+        public DateTime ModifiedTime { get; private set; }
+        public DateTime AccessTime { get; private set; }
+        public ItemTimestampData(DateTime creationTime, DateTime modifiedTime, DateTime accessTime)
         {
-            throw new NotImplementedException();
+            CreationTime = creationTime;
+            ModifiedTime = modifiedTime;
+            AccessTime = accessTime;
         }
     }
 }
