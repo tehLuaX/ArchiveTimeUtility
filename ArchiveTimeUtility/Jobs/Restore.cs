@@ -42,10 +42,13 @@ namespace ArchiveTimeUtility.Jobs
 			modifiedDirs = 0;
 		public Restore(string rootDir, string xmlPath)
         {
+			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine("WARNING! By running the restore job, you acknowledge that all items listed in the provided input file may have their creation, modification and/or access timestamps overwritten. Press any key to continue.");
 			Console.ReadKey();
+			Console.ResetColor();
 			Console.WriteLine("Restore job started.");
 			warningLogs = new Dictionary<string, InnerLogType>();
+			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine("Loading input file...");
 			XmlDocument d = new XmlDocument();
 			try
@@ -53,8 +56,10 @@ namespace ArchiveTimeUtility.Jobs
 				d.Load(xmlPath);
 			} catch (Exception)
 			{
+				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("An unknown error occurred while attempting to load the provided file.");
 				Console.WriteLine("Restore job failed.");
+				Console.ResetColor();
 				return;
 			}
 			for (int x = 0; x < d.DocumentElement.ChildNodes.Count; x++)
@@ -138,10 +143,12 @@ namespace ArchiveTimeUtility.Jobs
 					}
 				}
 			}
+			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("The restore job has been completed.");
 			Console.WriteLine($"{modifiedFiles} files have been modified.");
 			Console.WriteLine($"{modifiedDirs} directories have been modified.");
-			foreach(var log in warningLogs)
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			foreach (var log in warningLogs)
 			{
 				string item = log.Key.Substring(2),
 					rawItem = log.Key;
@@ -161,20 +168,30 @@ namespace ArchiveTimeUtility.Jobs
 						break;
 				}
 			}
+			Console.ResetColor();
 		}
 		private void WorkOnItem(string path, long ct = -1, long mt = -1, long at = -1, bool isFile = true, ushort layer = 0)
 		{
 			if (isFile) modifiedFiles++;
 			else modifiedDirs++;
 			if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-			Console.Write(isFile ? $"Working on file {path}\n" : $"Working on directory {path}\n");
+			Console.ResetColor();
+			if (!isFile)
+				Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.Write(isFile ? $"Working on file ": "Working on directory ");
+			Console.ForegroundColor = ConsoleColor.Magenta;
+			Console.Write($"{path}\n");
+			Console.ResetColor();
 			if (ct != -1)
 			{
 				DateTime ctdt = Utils.ToDateTime(ct);
 				if (isFile) File.SetCreationTimeUtc(path, ctdt);
 				else Directory.SetCreationTimeUtc(path, ctdt);
 				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-				Console.Write($" └───Defined creation time: {ctdt}\n");
+				Console.Write(" └───Defined creation time: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ ctdt}\n");
+				Console.ResetColor();
 			}
 			if (mt != -1)
 			{
@@ -182,14 +199,20 @@ namespace ArchiveTimeUtility.Jobs
 				if (isFile) File.SetLastWriteTimeUtc(path, Utils.ToDateTime(mt));
 				else Directory.SetCreationTimeUtc(path, mtdt);
 				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-				Console.Write($" └───Defined modified time: {mtdt}\n");
+				Console.Write(" └───Defined modified time: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ mtdt}\n");
+				Console.ResetColor();
 			}	
 			if (at != -1)
 			{
 				DateTime atdt = Utils.ToDateTime(at);
 				if (isFile) File.SetLastAccessTimeUtc(path, Utils.ToDateTime(at)); if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
 				else Directory.SetCreationTimeUtc(path, atdt);
-				Console.Write($" └───Defined access time: {atdt}\n");
+				Console.Write(" └───Defined access time: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ atdt}\n");
+				Console.ResetColor();
 			}
 		}
 	}

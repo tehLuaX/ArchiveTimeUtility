@@ -35,8 +35,11 @@ namespace ArchiveTimeUtility.Jobs
         Dictionary<string, ItemTimestampData> timestamps;
         public Store(string rootDir)
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Store job started.");
-            Console.WriteLine($"Initiating logic on root directory ({rootDir})");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Initiating logic on root directory ({rootDir})...");
+            Console.ResetColor();
             timestamps = new Dictionary<string, ItemTimestampData>();
             StoreTimestamps(rootDir);
         }
@@ -49,13 +52,28 @@ namespace ArchiveTimeUtility.Jobs
                     accessTime = File.GetLastAccessTimeUtc(childFile);
                 timestamps.Add("F*" + childFile, new ItemTimestampData(creationTime, modifiedTime, accessTime));
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($"Found file: {childFile}\n");
+                Console.Write("Found file: ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{ childFile}\n");
+                Console.ResetColor();
+
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With creation timestamp: {creationTime}\n");
+                Console.Write(" └───With creation timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{creationTime}\n");
+                Console.ResetColor();
+                
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With last modified timestamp: {modifiedTime}\n");
+                Console.Write(" └───With last modified timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{modifiedTime}\n");
+                Console.ResetColor();
+                
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With last access timestamp: {accessTime}\n");
+                Console.Write($" └───With last access timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{ accessTime}\n");
+                Console.ResetColor();
             }
             foreach (string childDir in Directory.GetDirectories(dir))
             {
@@ -64,20 +82,39 @@ namespace ArchiveTimeUtility.Jobs
                     accessTime = Directory.GetLastAccessTimeUtc(childDir);
                 timestamps.Add("D*" + childDir, new ItemTimestampData(creationTime, modifiedTime, accessTime));
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($"Launching inner search for directory {childDir} in {dir}\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Launching inner search for directory ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{ childDir} in {dir}\n");
+                Console.ResetColor();
+
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With creation timestamp: {creationTime}\n");
+                Console.Write(" └───With creation timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{ creationTime}\n");
+                Console.ResetColor();
+                
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With last modified timestamp: {modifiedTime}\n");
+                Console.Write(" └───With last modified timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{ modifiedTime}\n");
+                Console.ResetColor();
+
                 if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With last access timestamp: {accessTime}\n");
+                Console.Write(" └───With last access timestamp: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{ accessTime}\n");
+                Console.ResetColor();
+                
                 StoreTimestamps(childDir, layer + 1);
             }
             if (layer == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"Done reading {timestamps.Count} items.");
                 DateTime now = DateTime.Now;
                 string filename = $"archiveTimestamps-{now.Year}{now.Month}{now.Day}{now.Second}{now.Minute}{now.Hour}.atf";
+                Console.ResetColor();
                 Console.WriteLine($"Saving data as {filename}..."); 
                 /*var stream = File.CreateText(filename);
                 stream.WriteLine("<atufContents version=\"v1.0\"></atufContents>");
@@ -118,7 +155,9 @@ namespace ArchiveTimeUtility.Jobs
                 //root.AppendChild(items);
                 d.DocumentElement.AppendChild(items);
                 d.Save(filename);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Job done.");
+                Console.ResetColor();
             }
         }
     }

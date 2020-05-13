@@ -58,7 +58,9 @@ namespace ArchiveTimeUtility
 							unknownParam = false;
 						if (unknownParam)
 						{
+							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("An unknown parameter has been provided.");
+							Console.ResetColor();
 							return;
 						}
 					}
@@ -66,7 +68,9 @@ namespace ArchiveTimeUtility
 					{
 						if (args[x].StartsWith('-'))
 						{
+							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("The first argument cannot be a parameter.");
+							Console.ResetColor();
 							return;
 						}
 						else
@@ -83,7 +87,9 @@ namespace ArchiveTimeUtility
 							}
 							if (!isValidJob)
 							{
+								Console.ForegroundColor = ConsoleColor.Red;
 								Console.WriteLine("An unknown job has been provided and the program could not understand it.");
+								Console.ResetColor();
 								return;
 							}
 						}
@@ -95,7 +101,9 @@ namespace ArchiveTimeUtility
 							rootDir = args[x + 1];
 						} catch (IndexOutOfRangeException)
 						{
+							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("Although the directory argument was specified, its value could not be found.");
+							Console.ResetColor();
 							return;
 						}
 					}
@@ -106,12 +114,16 @@ namespace ArchiveTimeUtility
 				}
 			} else
 			{
+				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("The program was unable to find the required parameters.");
+				Console.ResetColor();
 				return;
 			}
 			if (rootDir == null)
 			{
+				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("No root directory has been provided.");
+				Console.ResetColor();
 				return;
 			}
 
@@ -119,9 +131,10 @@ namespace ArchiveTimeUtility
 			{
 				atfPath = args[args.Length - 1];
 			}
-
+			Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.WriteLine($"Detected requested job: {currentJob}");
 			Console.WriteLine($"Detected requested root directory: {rootDir}");
+			Console.ForegroundColor = ConsoleColor.Yellow;
 			if (currentJob.Equals("restore"))
 			{
 				Console.WriteLine("Firing up job \"restore\"");
@@ -144,8 +157,10 @@ namespace ArchiveTimeUtility
 				}
 			} catch (IOException)
 			{}
+			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine("This program is licensed under the MIT license. Press any key to accept the license.");
 			Console.ReadKey();
+			Console.ResetColor();
 		}
 	}
 }
