@@ -104,6 +104,7 @@ namespace ArchiveTimeUtility
 			} else
 			{
 				Console.WriteLine("The program was unable to find the required parameters.");
+				return;
 			}
 			if (rootDir == null)
 			{
