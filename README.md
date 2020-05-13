@@ -6,6 +6,10 @@ Certain archive utilities that are used for backup are unable to store the creat
 
 This software is FOSS (free and open source software) and was written using C# and was currently only tested on Windows.
 
+## Disclaimer
+
+WARNING! By running this program with the store job, you acknowledge that it may overwrite the creation, modification and access time of the provided files and/or directories. After running the store job, there is no going back.
+
 ## Contributing
 
 If you'd like to contribute to this project, please check [CONTRIBUTING.md](CONTRIBUTING.md) for more info.
