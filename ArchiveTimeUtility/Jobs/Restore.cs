@@ -54,7 +54,16 @@ namespace ArchiveTimeUtility.Jobs
 			try
 			{
 				d.Load(xmlPath);
-			} catch (Exception)
+			}
+			catch (FileNotFoundException)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine("The provided input file could not be find.");
+				Console.WriteLine("Restore job failed.");
+				Console.ResetColor();
+				return;
+			}
+			catch (Exception)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("An unknown error occurred while attempting to load the provided file.");
