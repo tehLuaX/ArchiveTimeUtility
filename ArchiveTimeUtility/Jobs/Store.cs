@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using ArchiveTimeUtility.Common;
 using System.Xml;
+using ArchiveTimeUtility.Common;
 
 namespace ArchiveTimeUtility.Jobs
 {
@@ -102,11 +103,11 @@ namespace ArchiveTimeUtility.Jobs
                     XmlNode itemTimestamps = d.CreateNode(XmlNodeType.Element,"timestamps", null);
                     
                     XmlNode itemCreationTimestamp = d.CreateNode(XmlNodeType.Element,"creationTime", null);
-                    itemCreationTimestamp.InnerText = item.Value.CreationTime.ToString();
+                    itemCreationTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.CreationTime).ToString();
                     XmlNode itemModifiedTimestamp = d.CreateNode(XmlNodeType.Element, "modifiedTime", null);
-                    itemModifiedTimestamp.InnerText = item.Value.ModifiedTime.ToString();
+                    itemModifiedTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.ModifiedTime).ToString();
                     XmlNode itemAccessTimestamp = d.CreateNode(XmlNodeType.Element, "accessTime", null);
-                    itemAccessTimestamp.InnerText = item.Value.AccessTime.ToString();
+                    itemAccessTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.AccessTime).ToString();
                     
                     itemTimestamps.AppendChild(itemCreationTimestamp);
                     itemTimestamps.AppendChild(itemModifiedTimestamp);
