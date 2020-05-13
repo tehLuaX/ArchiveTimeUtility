@@ -12,6 +12,8 @@ WARNING! By running this program with the store job, you acknowledge that it may
 
 ## Running ATU
 
+For information about the program syntax, head over to (the wiki)[https://github.com/tehLuaX/ArchiveTimeUtility/wiki].
+
 ### Standalone build
 
 There is only one standalone build available, and it's for Windows (x86). Just download the standalone version from the releases tab on GitHub and run the `.exe` file.
