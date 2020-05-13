@@ -12,7 +12,7 @@ WARNING! By running this program with the store job, you acknowledge that it may
 
 ## Running ATU
 
-For information about the program syntax, head over to (the wiki)[https://github.com/tehLuaX/ArchiveTimeUtility/wiki].
+For information about the program syntax, head over to [the wiki](https://github.com/tehLuaX/ArchiveTimeUtility/wiki).
 
 ### Standalone build
 
