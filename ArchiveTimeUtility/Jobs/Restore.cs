@@ -42,6 +42,8 @@ namespace ArchiveTimeUtility.Jobs
 			modifiedDirs = 0;
 		public Restore(string rootDir, string xmlPath)
         {
+			Console.WriteLine("WARNING! By running the restore job, you acknowledge that all items listed in the provided input file may have their creation, modification and/or access timestamps overwritten. Press any key to continue.");
+			Console.ReadKey();
 			Console.WriteLine("Restore job started.");
 			warningLogs = new Dictionary<string, InnerLogType>();
 			Console.WriteLine("Loading input file...");
