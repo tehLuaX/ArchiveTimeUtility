@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.IO;
 using ArchiveTimeUtility.Common;
 using System.Xml;
-using ArchiveTimeUtility.Common;
 
 namespace ArchiveTimeUtility.Jobs
 {
