@@ -40,7 +40,7 @@ namespace ArchiveTimeUtility.Jobs
             timestamps = new Dictionary<string, ItemTimestampData>();
             StoreTimestamps(rootDir);
         }
-        private void StoreTimestamps(string dir, int layer = 0)
+        private void StoreTimestamps(string dir, int layer = 1)
         {
             foreach (string childFile in Directory.GetFiles(dir))
             {

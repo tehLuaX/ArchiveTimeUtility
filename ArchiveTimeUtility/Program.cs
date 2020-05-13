@@ -31,9 +31,10 @@ namespace ArchiveTimeUtility
 		private static readonly string[] VALID_PARAMS = { "-d", "--dir" };
 		static void Main(string[] args)
 		{
-			// Syntax: atu [store|restore] <--dir directory>
+			// Syntax: atu [store|restore] <--dir directory> [atfPath]
 			string rootDir = null,
-				currentJob = null;
+				currentJob = null,
+				atfPath = null;
 			bool currentArgIsValue = false;
 			if (args.Length != 0)
 			{
@@ -111,12 +112,18 @@ namespace ArchiveTimeUtility
 				Console.WriteLine("No root directory has been provided.");
 				return;
 			}
+
+			if (currentJob.Equals("restore"))
+			{
+				atfPath = args[args.Length - 1];
+			}
+
 			Console.WriteLine($"Detected requested job: {currentJob}");
 			Console.WriteLine($"Detected requested root directory: {rootDir}");
 			if (currentJob.Equals("restore"))
 			{
 				Console.WriteLine("Firing up job \"restore\"");
-				new Jobs.Restore(rootDir);
+				new Jobs.Restore(rootDir, atfPath);
 			} else
 			{
 				Console.WriteLine("Firing up job \"store\"");

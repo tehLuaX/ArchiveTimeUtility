@@ -21,21 +21,10 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-using System;
-
 namespace ArchiveTimeUtility.Common
 {
-    public static class Utils
+    enum InnerLogType
     {
-        public static long ToUnixEpoch(DateTime time)
-        {
-            return (long) time.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-        }
-		public static DateTime ToDateTime(long epoch)
-		{
-			DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-			dtDateTime = dtDateTime.AddSeconds(epoch).ToLocalTime();
-			return dtDateTime;
-		}
-    }
+        MISSING_PATH, MISSING_LOCAL_FILE, MISSING_LOCAL_DIR, UNKNOWN_ITEM_TYPE
+	}
 }
