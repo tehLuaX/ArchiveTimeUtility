@@ -27,9 +27,90 @@ namespace ArchiveTimeUtility
 {
 	class Program
 	{
+		private static readonly string[] VALID_JOBS = { "store", "restore" };
+		private static readonly string[] VALID_PARAMS = { "-d", "--dir" };
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			// Syntax: atu [store|restore] <--dir directory>
+			string rootDir = null,
+				currentJob = null;
+			bool currentArgIsValue = false;
+			if (args.Length != 0)
+			{
+				for (ushort x = 0; x < args.Length; x++)
+				{
+					if (!currentArgIsValue)
+					{
+						bool unknownParam = true;
+						if (args[x].StartsWith('-'))
+							foreach (string param in VALID_PARAMS)
+							{
+								if (param.Equals(args[x]))
+								{
+									unknownParam = false;
+									break;
+								}
+							}
+						else
+							unknownParam = false;
+						if (unknownParam)
+						{
+							Console.WriteLine("An unknown parameter has been provided.");
+							return;
+						}
+					}
+					if (x == 0)
+					{
+						if (args[x].StartsWith('-'))
+						{
+							Console.WriteLine("The first argument cannot be a parameter.");
+							return;
+						}
+						else
+						{
+							bool isValidJob = false;
+							foreach(string job in VALID_JOBS)
+							{
+								if (job == args[x])
+								{
+									isValidJob = true;
+									currentJob = args[x];
+									break;
+								}
+							}
+							if (!isValidJob)
+							{
+								Console.WriteLine("An unknown job has been provided and the program could not understand it.");
+								return;
+							}
+						}
+					}
+					if (args[x].Equals("--dir") || args[x].Equals("-d"))
+					{
+						try
+						{
+							rootDir = args[x + 1];
+						} catch (IndexOutOfRangeException)
+						{
+							Console.WriteLine("Although the directory argument was specified, its value could not be found.");
+							return;
+						}
+					}
+					if (args[x].StartsWith('-'))
+						currentArgIsValue = true;
+					else if (currentArgIsValue)
+						currentArgIsValue = false;
+				}
+			} else
+			{
+				Console.WriteLine("The program was unable to find the required parameters.");
+			}
+			if (rootDir == null)
+			{
+				Console.WriteLine("No root directory has been provided.");
+				return;
+			}
+			Console.WriteLine($"Detected requested job: {currentJob}");
 		}
 	}
 }
