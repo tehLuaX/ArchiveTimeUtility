@@ -108,7 +108,7 @@ namespace ArchiveTimeUtility.Jobs
                 
                 StoreTimestamps(childDir, layer + 1);
             }
-            if (layer == 0)
+            if (layer == 1)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"Done reading {timestamps.Count} items.");
