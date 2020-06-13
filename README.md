@@ -14,13 +14,7 @@ WARNING! By running this program with the store job, you acknowledge that it may
 
 For information about the program syntax, head over to [the wiki](https://github.com/tehLuaX/ArchiveTimeUtility/wiki).
 
-### Standalone build
-
-There is only one standalone build available, and it's for Windows (x86). Just download the standalone version from the releases tab on GitHub and run the `.exe` file.
-
-### Framework-dependent build
-
-In order to run framework-dependent builds, just run the software with the following command: `dotnet ArchiveTimeUtility.dll`.
+In order to run ATU, you'll have to create a new .NET Core 2.0 project and then import all source files from [the latest release](https://github.com/tehLuaX/ArchiveTimeUtility/releases/latest) or you can pick a [specific release](https://github.com/tehLuaX/ArchiveTimeUtility/releases/). After importing the source files, you can build the project and then run ATU.
 
 ## Contributing
 
