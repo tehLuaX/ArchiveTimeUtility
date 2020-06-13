@@ -8,7 +8,7 @@ This software is FOSS (free and open source software) and was written using C# a
 
 ## Disclaimer
 
-WARNING! By running this program with the store job, you acknowledge that it may overwrite the creation, modification and access time of the provided files and/or directories. After running the store job, **there is no going back**.
+WARNING! By running this program with the store job, you acknowledge that it may overwrite the creation, modification and access time of the provided files and/or directories. After running the store/touch job, **you cannot undo the changes**.
 
 ## Running ATU
 
