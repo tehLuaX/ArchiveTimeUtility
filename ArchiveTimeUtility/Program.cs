@@ -28,7 +28,7 @@ namespace ArchiveTimeUtility
 {
 	class Program
 	{
-		private static readonly string[] VALID_JOBS = { "store", "restore" };
+		private static readonly string[] VALID_JOBS = { "store", "restore", "touch" };
 		private static readonly string[] VALID_PARAMS = { "-d", "--dir" };
 		static void Main(string[] args)
 		{
@@ -135,14 +135,26 @@ namespace ArchiveTimeUtility
 			Console.WriteLine($"Detected requested job: {currentJob}");
 			Console.WriteLine($"Detected requested root directory: {rootDir}");
 			Console.ForegroundColor = ConsoleColor.Yellow;
-			if (currentJob.Equals("restore"))
+			switch (currentJob)
 			{
-				Console.WriteLine("Firing up job \"restore\"");
-				new Jobs.Restore(rootDir, atfPath);
-			} else
-			{
-				Console.WriteLine("Firing up job \"store\"");
-				new Jobs.Store(rootDir);
+				case "restore":
+					{
+						Console.WriteLine("Firing up job \"restore\"...");
+						new Jobs.Restore(rootDir, atfPath);
+						break;
+					}
+				case "store":
+					{
+						Console.WriteLine("Firing up job \"store\"...");
+						new Jobs.Store(rootDir);
+						break;
+					}
+				case "touch":
+					{
+						Console.WriteLine("Firing up job \"touch\"...");
+						new Jobs.Touch(rootDir);
+						break;
+					}
 			}
 		}
 		private static void ShowLicense()
