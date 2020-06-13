@@ -23,8 +23,8 @@
 */
 namespace ArchiveTimeUtility.Common
 {
-    enum InnerLogType
-    {
-        MISSING_PATH, MISSING_LOCAL_FILE, MISSING_LOCAL_DIR, UNKNOWN_ITEM_TYPE
+	enum InnerLogType
+	{
+		MISSING_PATH, MISSING_LOCAL_FILE, MISSING_LOCAL_DIR, UNKNOWN_ITEM_TYPE
 	}
 }

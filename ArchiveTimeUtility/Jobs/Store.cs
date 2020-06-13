@@ -29,136 +29,136 @@ using System.Xml;
 
 namespace ArchiveTimeUtility.Jobs
 {
-    class Store
-    {
-        // The string is the path of the file or directory and it should start with "F*" if it's a file or "D*" if it's a directory.
-        Dictionary<string, ItemTimestampData> timestamps;
-        public Store(string rootDir)
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Store job started.");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"Initiating logic on root directory ({rootDir})...");
-            Console.ResetColor();
-            timestamps = new Dictionary<string, ItemTimestampData>();
-            StoreTimestamps(rootDir);
-        }
-        private void StoreTimestamps(string dir, int layer = 1)
-        {
-            foreach (string childFile in Directory.GetFiles(dir))
-            {
-                DateTime creationTime = File.GetCreationTimeUtc(childFile),
-                    modifiedTime = File.GetLastWriteTimeUtc(childFile),
-                    accessTime = File.GetLastAccessTimeUtc(childFile);
-                timestamps.Add("F*" + childFile, new ItemTimestampData(creationTime, modifiedTime, accessTime));
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write("Found file: ");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write($"{ childFile}\n");
-                Console.ResetColor();
+	class Store
+	{
+		// The string is the path of the file or directory and it should start with "F*" if it's a file or "D*" if it's a directory.
+		Dictionary<string, ItemTimestampData> timestamps;
+		public Store(string rootDir)
+		{
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			Console.WriteLine("Store job started.");
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"Initiating logic on root directory ({rootDir})...");
+			Console.ResetColor();
+			timestamps = new Dictionary<string, ItemTimestampData>();
+			StoreTimestamps(rootDir);
+		}
+		private void StoreTimestamps(string dir, int layer = 1)
+		{
+			foreach (string childFile in Directory.GetFiles(dir))
+			{
+				DateTime creationTime = File.GetCreationTimeUtc(childFile),
+					modifiedTime = File.GetLastWriteTimeUtc(childFile),
+					accessTime = File.GetLastAccessTimeUtc(childFile);
+				timestamps.Add("F*" + childFile, new ItemTimestampData(creationTime, modifiedTime, accessTime));
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write("Found file: ");
+				Console.ForegroundColor = ConsoleColor.Magenta;
+				Console.Write($"{ childFile}\n");
+				Console.ResetColor();
 
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write(" └───With creation timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{creationTime}\n");
-                Console.ResetColor();
-                
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write(" └───With last modified timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{modifiedTime}\n");
-                Console.ResetColor();
-                
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write($" └───With last access timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{ accessTime}\n");
-                Console.ResetColor();
-            }
-            foreach (string childDir in Directory.GetDirectories(dir))
-            {
-                DateTime creationTime = Directory.GetCreationTimeUtc(childDir),
-                    modifiedTime = Directory.GetLastWriteTimeUtc(childDir),
-                    accessTime = Directory.GetLastAccessTimeUtc(childDir);
-                timestamps.Add("D*" + childDir, new ItemTimestampData(creationTime, modifiedTime, accessTime));
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("Launching inner search for directory ");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write($"{ childDir} in {dir}\n");
-                Console.ResetColor();
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write(" └───With creation timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{creationTime}\n");
+				Console.ResetColor();
+				
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write(" └───With last modified timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{modifiedTime}\n");
+				Console.ResetColor();
+				
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write($" └───With last access timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ accessTime}\n");
+				Console.ResetColor();
+			}
+			foreach (string childDir in Directory.GetDirectories(dir))
+			{
+				DateTime creationTime = Directory.GetCreationTimeUtc(childDir),
+					modifiedTime = Directory.GetLastWriteTimeUtc(childDir),
+					accessTime = Directory.GetLastAccessTimeUtc(childDir);
+				timestamps.Add("D*" + childDir, new ItemTimestampData(creationTime, modifiedTime, accessTime));
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.Write("Launching inner search for directory ");
+				Console.ForegroundColor = ConsoleColor.Magenta;
+				Console.Write($"{ childDir} in {dir}\n");
+				Console.ResetColor();
 
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write(" └───With creation timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{ creationTime}\n");
-                Console.ResetColor();
-                
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write(" └───With last modified timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{ modifiedTime}\n");
-                Console.ResetColor();
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write(" └───With creation timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ creationTime}\n");
+				Console.ResetColor();
+				
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write(" └───With last modified timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ modifiedTime}\n");
+				Console.ResetColor();
 
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write(" └───With last access timestamp: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"{ accessTime}\n");
-                Console.ResetColor();
-                
-                StoreTimestamps(childDir, layer + 1);
-            }
-            if (layer == 1)
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"Done reading {timestamps.Count} items.");
-                DateTime now = DateTime.Now;
-                string filename = $"archiveTimestamps-{now.Year}{now.Month}{now.Day}{now.Second}{now.Minute}{now.Hour}.atf";
-                Console.ResetColor();
-                Console.WriteLine($"Saving data as {filename}..."); 
-                /*var stream = File.CreateText(filename);
-                stream.WriteLine("<atufContents version=\"v1.0\"></atufContents>");
-                stream.Close();*/
-                XmlDocument d = new XmlDocument();
-                //d.LoadXml(filename);
-                XmlElement root = d.CreateElement("atufContents");
-                root.SetAttribute("version", "v1.0");
-                d.InnerXml = root.OuterXml;
-                d.Save(filename);
-                XmlElement items = d.CreateElement("items");
-                foreach (var item in timestamps)
-                {
-                    XmlNode itemElement = d.CreateNode(XmlNodeType.Element,
-                        item.Key.StartsWith("F*") ? "file" : "directory", null);
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write(" └───With last access timestamp: ");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.Write($"{ accessTime}\n");
+				Console.ResetColor();
+				
+				StoreTimestamps(childDir, layer + 1);
+			}
+			if (layer == 1)
+			{
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				Console.WriteLine($"Done reading {timestamps.Count} items.");
+				DateTime now = DateTime.Now;
+				string filename = $"archiveTimestamps-{now.Year}{now.Month}{now.Day}{now.Second}{now.Minute}{now.Hour}.atf";
+				Console.ResetColor();
+				Console.WriteLine($"Saving data as {filename}..."); 
+				/*var stream = File.CreateText(filename);
+				stream.WriteLine("<atufContents version=\"v1.0\"></atufContents>");
+				stream.Close();*/
+				XmlDocument d = new XmlDocument();
+				//d.LoadXml(filename);
+				XmlElement root = d.CreateElement("atufContents");
+				root.SetAttribute("version", "v1.0");
+				d.InnerXml = root.OuterXml;
+				d.Save(filename);
+				XmlElement items = d.CreateElement("items");
+				foreach (var item in timestamps)
+				{
+					XmlNode itemElement = d.CreateNode(XmlNodeType.Element,
+						item.Key.StartsWith("F*") ? "file" : "directory", null);
 
-                    XmlAttribute fnAttrib = d.CreateAttribute("path");
-                    fnAttrib.Value = item.Key.Substring(2);
+					XmlAttribute fnAttrib = d.CreateAttribute("path");
+					fnAttrib.Value = item.Key.Substring(2);
 
-                    itemElement.Attributes.Append(fnAttrib);
-                    
-                    XmlNode itemTimestamps = d.CreateNode(XmlNodeType.Element,"timestamps", null);
-                    
-                    XmlNode itemCreationTimestamp = d.CreateNode(XmlNodeType.Element,"creationTime", null);
-                    itemCreationTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.CreationTime).ToString();
-                    XmlNode itemModifiedTimestamp = d.CreateNode(XmlNodeType.Element, "modifiedTime", null);
-                    itemModifiedTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.ModifiedTime).ToString();
-                    XmlNode itemAccessTimestamp = d.CreateNode(XmlNodeType.Element, "accessTime", null);
-                    itemAccessTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.AccessTime).ToString();
-                    
-                    itemTimestamps.AppendChild(itemCreationTimestamp);
-                    itemTimestamps.AppendChild(itemModifiedTimestamp);
-                    itemTimestamps.AppendChild(itemAccessTimestamp);
-                    
-                    itemElement.AppendChild(itemTimestamps);
-                    items.AppendChild(itemElement);
-                }
-                //root.AppendChild(items);
-                d.DocumentElement.AppendChild(items);
-                d.Save(filename);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Job done.");
-                Console.ResetColor();
-            }
-        }
-    }
+					itemElement.Attributes.Append(fnAttrib);
+					
+					XmlNode itemTimestamps = d.CreateNode(XmlNodeType.Element,"timestamps", null);
+					
+					XmlNode itemCreationTimestamp = d.CreateNode(XmlNodeType.Element,"creationTime", null);
+					itemCreationTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.CreationTime).ToString();
+					XmlNode itemModifiedTimestamp = d.CreateNode(XmlNodeType.Element, "modifiedTime", null);
+					itemModifiedTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.ModifiedTime).ToString();
+					XmlNode itemAccessTimestamp = d.CreateNode(XmlNodeType.Element, "accessTime", null);
+					itemAccessTimestamp.InnerText = Utils.ToUnixEpoch(item.Value.AccessTime).ToString();
+					
+					itemTimestamps.AppendChild(itemCreationTimestamp);
+					itemTimestamps.AppendChild(itemModifiedTimestamp);
+					itemTimestamps.AppendChild(itemAccessTimestamp);
+					
+					itemElement.AppendChild(itemTimestamps);
+					items.AppendChild(itemElement);
+				}
+				//root.AppendChild(items);
+				d.DocumentElement.AppendChild(items);
+				d.Save(filename);
+				Console.ForegroundColor = ConsoleColor.Green;
+				Console.WriteLine("Job done.");
+				Console.ResetColor();
+			}
+		}
+	}
 }

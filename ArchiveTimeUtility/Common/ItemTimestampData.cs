@@ -25,16 +25,16 @@ using System;
 
 namespace ArchiveTimeUtility.Common
 {
-    class ItemTimestampData
-    {
-        public DateTime CreationTime { get; private set; }
-        public DateTime ModifiedTime { get; private set; }
-        public DateTime AccessTime { get; private set; }
-        public ItemTimestampData(DateTime creationTime, DateTime modifiedTime, DateTime accessTime)
-        {
-            CreationTime = creationTime;
-            ModifiedTime = modifiedTime;
-            AccessTime = accessTime;
-        }
-    }
+	class ItemTimestampData
+	{
+		public DateTime CreationTime { get; private set; }
+		public DateTime ModifiedTime { get; private set; }
+		public DateTime AccessTime { get; private set; }
+		public ItemTimestampData(DateTime creationTime, DateTime modifiedTime, DateTime accessTime)
+		{
+			CreationTime = creationTime;
+			ModifiedTime = modifiedTime;
+			AccessTime = accessTime;
+		}
+	}
 }

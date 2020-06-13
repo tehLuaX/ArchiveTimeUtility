@@ -29,8 +29,8 @@ using System.Xml;
 
 namespace ArchiveTimeUtility.Jobs
 {
-    class Restore
-    {
+	class Restore
+	{
 		// Just like in the Store class, the string should start with F* for files and D*
 		// for directories.
 		//
@@ -41,7 +41,7 @@ namespace ArchiveTimeUtility.Jobs
 		int modifiedFiles = 0,
 			modifiedDirs = 0;
 		public Restore(string rootDir, string xmlPath)
-        {
+		{
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine("WARNING! By running the restore job, you acknowledge that all items listed in the provided input file may have their creation, modification and/or access timestamps overwritten. Press any key to continue.");
 			Console.ReadKey();

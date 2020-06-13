@@ -28,59 +28,59 @@ using System.Text;
 
 namespace ArchiveTimeUtility.Jobs
 {
-    class Touch
-    {
-        private string path;
-        /// <summary>
-        /// Initiates a new touch job in the specified context.
-        /// </summary>
-        /// <param name="path">The context path.</param>
-        public Touch(string path)
-        {
-            this.path = path;
+	class Touch
+	{
+		private string path;
+		/// <summary>
+		/// Initiates a new touch job in the specified context.
+		/// </summary>
+		/// <param name="path">The context path.</param>
+		public Touch(string path)
+		{
+			this.path = path;
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Touch job started.");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"Initiating logic on root directory ({path})...");
-            Console.ResetColor();
-            StoreTimestamps(path);
-        }
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			Console.WriteLine("Touch job started.");
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"Initiating logic on root directory ({path})...");
+			Console.ResetColor();
+			StoreTimestamps(path);
+		}
 
 
-        private void StoreTimestamps(string rootDir, int layer = 1)
-        {
-            foreach (string childFile in Directory.GetFiles(rootDir))
-            {
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.Write("Found file: ");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write($"{childFile}\n");
-                Console.ResetColor();
+		private void StoreTimestamps(string rootDir, int layer = 1)
+		{
+			foreach (string childFile in Directory.GetFiles(rootDir))
+			{
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.Write("Found file: ");
+				Console.ForegroundColor = ConsoleColor.Magenta;
+				Console.Write($"{childFile}\n");
+				Console.ResetColor();
 
-                File.SetCreationTimeUtc(childFile, DateTime.Now);
-                File.SetLastWriteTimeUtc(childFile, DateTime.Now);
-                File.SetLastAccessTimeUtc(childFile, DateTime.Now);
-            }
+				File.SetCreationTimeUtc(childFile, DateTime.Now);
+				File.SetLastWriteTimeUtc(childFile, DateTime.Now);
+				File.SetLastAccessTimeUtc(childFile, DateTime.Now);
+			}
 
-            foreach (string childDir in Directory.GetDirectories(rootDir))
-            {
-                if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("Launching inner search for directory ");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write($"{childDir} in {rootDir}\n");
-                Console.ResetColor();
+			foreach (string childDir in Directory.GetDirectories(rootDir))
+			{
+				if (layer != 0) for (int x = 0; x < layer; x++) { Console.Write(" "); }
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.Write("Launching inner search for directory ");
+				Console.ForegroundColor = ConsoleColor.Magenta;
+				Console.Write($"{childDir} in {rootDir}\n");
+				Console.ResetColor();
 
-                File.SetCreationTimeUtc(childDir, DateTime.Now);
-                File.SetLastWriteTimeUtc(childDir, DateTime.Now);
-                File.SetLastAccessTimeUtc(childDir, DateTime.Now);
+				File.SetCreationTimeUtc(childDir, DateTime.Now);
+				File.SetLastWriteTimeUtc(childDir, DateTime.Now);
+				File.SetLastAccessTimeUtc(childDir, DateTime.Now);
 
-                StoreTimestamps(childDir, layer + 1);
-            }
+				StoreTimestamps(childDir, layer + 1);
+			}
 
-            /*foreach (string childDir in Directory.GetDirectories(rootDir))
-                StoreTimestamps(childDir, layer + 1);*/
-        }
-    }
+			/*foreach (string childDir in Directory.GetDirectories(rootDir))
+				StoreTimestamps(childDir, layer + 1);*/
+		}
+	}
 }

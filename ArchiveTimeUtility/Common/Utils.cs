@@ -25,17 +25,17 @@ using System;
 
 namespace ArchiveTimeUtility.Common
 {
-    public static class Utils
-    {
-        public static long ToUnixEpoch(DateTime time)
-        {
-            return (long) time.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-        }
+	public static class Utils
+	{
+		public static long ToUnixEpoch(DateTime time)
+		{
+			return (long) time.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+		}
 		public static DateTime ToDateTime(long epoch)
 		{
 			DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 			dtDateTime = dtDateTime.AddSeconds(epoch).ToLocalTime();
 			return dtDateTime;
 		}
-    }
+	}
 }
