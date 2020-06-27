@@ -72,9 +72,9 @@ namespace ArchiveTimeUtility.Jobs
 				Console.Write($"{childDir} in {rootDir}\n");
 				Console.ResetColor();
 
-				File.SetCreationTimeUtc(childDir, DateTime.Now);
-				File.SetLastWriteTimeUtc(childDir, DateTime.Now);
-				File.SetLastAccessTimeUtc(childDir, DateTime.Now);
+				Directory.SetCreationTimeUtc(childDir, DateTime.Now);
+				Directory.SetLastWriteTimeUtc(childDir, DateTime.Now);
+				Directory.SetLastAccessTimeUtc(childDir, DateTime.Now);
 
 				StoreTimestamps(childDir, layer + 1);
 			}
